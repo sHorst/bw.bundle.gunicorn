@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon for %i
+Requires=gunicorn3@%i.socket
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/%i.pid
+User=${user}
+Group=${group}
+RuntimeDirectory=gunicorn
+WorkingDirectory=${app_dir}
+ExecStart=/usr/bin/gunicorn3 --pid /run/gunicorn/$i.pid --bind unix:/run/gunicorn/%i.socket ${appname}.wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
