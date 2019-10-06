@@ -1,15 +1,15 @@
 [Unit]
-Description=gunicorn daemon for %i
-Requires=gunicorn3@%i.socket
+Description=gunicorn daemon for ${appname}
+Requires=gunicorn3@${appname}.socket
 After=network.target
 
 [Service]
-PIDFile=/run/gunicorn/%i.pid
+PIDFile=/run/gunicorn/${appname}.pid
 User=${user}
 Group=${group}
 RuntimeDirectory=gunicorn
 WorkingDirectory=${app_dir}
-ExecStart=/usr/bin/gunicorn3 --pid /run/gunicorn/$i.pid --bind unix:/run/gunicorn/%i.socket ${appname}.wsgi
+ExecStart=/usr/bin/gunicorn3 --pid /run/gunicorn/${appname}.pid --bind unix:/run/gunicorn/${appname}.socket ${appname}.wsgi
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
