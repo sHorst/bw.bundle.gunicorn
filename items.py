@@ -32,4 +32,11 @@ for app, app_config in sorted(node.metadata.get('gunicorn', {}).get('apps', {}).
         'owner': 'root',
         'group': 'root',
         'mode': '0644',
+        'content_type': 'mako',
+        'context': {
+            'user': app_config.get('user', 'www-data'),
+            'group': app_config.get('group', 'www-data'),
+            'app_dir': app_config.get('app_dir', '/var/www/tools/{app}'.format(app=app)),
+            'appname': app,
+        },
     }
