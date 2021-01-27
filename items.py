@@ -24,6 +24,7 @@ for app, app_config in sorted(node.metadata.get('gunicorn', {}).get('apps', {}).
             'group': app_config.get('group', 'www-data'),
             'app_dir': app_config.get('app_dir', '/var/www/tools/{app}'.format(app=app)),
             'appname': app,
+            'exec': app_config.get('exec', '/usr/bin/gunicorn3'),
         },
     }
 
